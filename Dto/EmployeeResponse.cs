@@ -8,5 +8,5 @@ public class EmployeeResponse {
     public string Role { get; set; } = null!;
     public int TeamId { get; set; }
     
-    //public ICollection<TaskDto> Tasks { get; set; } = null!;
+    public ICollection<TaskDto> Tasks { get; set; } = null!;
 }
