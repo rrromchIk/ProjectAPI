@@ -39,7 +39,7 @@ namespace ProjectAPI.Controllers {
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClientDto))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClientResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public IActionResult CreateClient([FromBody] ClientDto clientDto) {
             if (!ModelState.IsValid)

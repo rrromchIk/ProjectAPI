@@ -20,28 +20,28 @@ namespace ProjectAPI.Controllers {
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmployeeDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmployeeResponse>))]
         public IActionResult GetAllEmployees() {
             var employees = _employeeRepository.GetAllEmployees();
-            var responseList = _mapper.Map<List<EmployeeDto>>(employees);
+            var responseList = _mapper.Map<List<EmployeeResponse>>(employees);
             return Ok(responseList);
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EmployeeDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EmployeeResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetEmployeeById([FromRoute] int id) {
             if (!_employeeRepository.EmployeeExists(id))
                 return NotFound();
 
             var employee = _employeeRepository.GetEmployeeById(id);
-            var response = _mapper.Map<EmployeeDto>(employee);
+            var response = _mapper.Map<EmployeeResponse>(employee);
 
             return Ok(response);
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(EmployeeDto))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(EmployeeResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public IActionResult CreateEmployee([FromBody] EmployeeDto employeeDto) {
             if (!ModelState.IsValid)

@@ -39,7 +39,7 @@ namespace ProjectAPI.Controllers {
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TeamDto))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TeamResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         public IActionResult CreateTeam([FromBody] TeamDto teamDto) {
             if (!ModelState.IsValid)
