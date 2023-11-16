@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ProjectAPI.Dto;
 using ProjectAPI.Models;
+using Task = ProjectAPI.Models.Task;
 
 namespace ProjectAPI.Helper {
     public class MappingProfiles : Profile {
@@ -10,15 +11,15 @@ namespace ProjectAPI.Helper {
             CreateMap<Project, ProjectResponse>();
 
             CreateMap<Team, TeamDto>();
+            CreateMap<Team, TeamResponse>();
             CreateMap<TeamDto, Team>();
 
             CreateMap<Client, ClientDto>();
-            CreateMap<ClientDto, Client>();
-
             CreateMap<Client, ClientResponse>();
-            CreateMap<Team, TeamResponse>();
-
+            CreateMap<ClientDto, Client>();
+            
             CreateMap<Employee, EmployeeDto>();
+            CreateMap<Employee, EmployeeResponse>();
             CreateMap<EmployeeDto, Employee>();
             
             CreateMap<Task, TaskDto>();
