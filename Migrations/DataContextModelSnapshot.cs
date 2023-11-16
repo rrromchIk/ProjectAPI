@@ -22,7 +22,7 @@ namespace ProjectAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProjectsApi.Models.Client", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace ProjectAPI.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Employee", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +74,7 @@ namespace ProjectAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -84,7 +84,7 @@ namespace ProjectAPI.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Project", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Project", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,7 +92,7 @@ namespace ProjectAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClientId")
+                    b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -103,7 +103,7 @@ namespace ProjectAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -115,19 +115,13 @@ namespace ProjectAPI.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Task", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Task", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AssignedEmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssignedProjectId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -136,9 +130,15 @@ namespace ProjectAPI.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -146,14 +146,14 @@ namespace ProjectAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignedEmployeeId");
+                    b.HasIndex("EmployeeId");
 
-                    b.HasIndex("AssignedProjectId");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Team", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Team", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -170,73 +170,68 @@ namespace ProjectAPI.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Employee", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Employee", b =>
                 {
-                    b.HasOne("ProjectsApi.Models.Team", "Team")
+                    b.HasOne("ProjectAPI.Models.Team", "Team")
                         .WithMany("Employees")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeamId");
 
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Project", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Project", b =>
                 {
-                    b.HasOne("ProjectsApi.Models.Client", "Client")
+                    b.HasOne("ProjectAPI.Models.Client", "Client")
                         .WithMany("Projects")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientId");
 
-                    b.HasOne("ProjectsApi.Models.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("ProjectAPI.Models.Team", "Team")
+                        .WithMany("Projects")
+                        .HasForeignKey("TeamId");
 
                     b.Navigation("Client");
 
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Task", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Task", b =>
                 {
-                    b.HasOne("ProjectsApi.Models.Employee", "AssignedEmployee")
+                    b.HasOne("ProjectAPI.Models.Employee", "Employee")
                         .WithMany("Tasks")
-                        .HasForeignKey("AssignedEmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("ProjectAPI.Models.Project", "Project")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectsApi.Models.Project", "AssignedProject")
-                        .WithMany("Tasks")
-                        .HasForeignKey("AssignedProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.Navigation("Employee");
 
-                    b.Navigation("AssignedEmployee");
-
-                    b.Navigation("AssignedProject");
+                    b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Client", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Client", b =>
                 {
                     b.Navigation("Projects");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Employee", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Employee", b =>
                 {
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Project", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Project", b =>
                 {
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("ProjectsApi.Models.Team", b =>
+            modelBuilder.Entity("ProjectAPI.Models.Team", b =>
                 {
                     b.Navigation("Employees");
+
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

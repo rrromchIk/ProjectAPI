@@ -7,9 +7,9 @@ public class Task {
     public DateTime DueDate { get; set; }
     public string Status { get; set; } = null!;
 
-    public int AssignedEmployeeId { get; set; }
-    public Employee AssignedEmployee { get; set; } = null!;
+    public int? EmployeeId { get; set; }
+    public Employee Employee { get; set; } = null!;
 
-    public int AssignedProjectId { get; set; }
-    public Project AssignedProject { get; set; } = null!;
+    public int ProjectId { get; set; }
+    public Project Project { get; set; } = null!;
 }

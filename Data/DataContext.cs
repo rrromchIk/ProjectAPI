@@ -12,17 +12,33 @@ namespace ProjectAPI.Data {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<Task>()
-                .HasOne(t => t.AssignedEmployee)
-                .WithMany(e => e.Tasks)
-                .HasForeignKey(t => t.AssignedEmployeeId)
-                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.Tasks)
+                .WithOne(t => t.Project)
+                .HasForeignKey(t => t.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade); // Delete task when deleting project
 
+            modelBuilder.Entity<Employee>()
+                .HasMany(e => e.Tasks)
+                .WithOne(t => t.Employee)
+                .HasForeignKey(t => t.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction); // No cascading delete when deleting employee
+
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.TeamId)
+                .IsRequired(false);
+            
+            modelBuilder.Entity<Project>()
+                .Property(e => e.TeamId)
+                .IsRequired(false);
+            
+            modelBuilder.Entity<Project>()
+                .Property(e => e.ClientId)
+                .IsRequired(false);
+            
             modelBuilder.Entity<Task>()
-                .HasOne(t => t.AssignedProject)
-                .WithMany(p => p.Tasks)
-                .HasForeignKey(t => t.AssignedProjectId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .Property(e => e.EmployeeId)
+                .IsRequired(false);
         }
     }
 }

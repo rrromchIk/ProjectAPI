@@ -9,6 +9,6 @@ public class Employee {
 
     public ICollection<Task> Tasks { get; set; } = null!;
 
-    public int TeamId { get; set; }
+    public int? TeamId { get; set; }
     public Team Team { get; set; } = null!;
 }

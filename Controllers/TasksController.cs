@@ -50,12 +50,12 @@ namespace ProjectAPI.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             
-            if (!_employeeRepository.EmployeeExists(taskDto.AssignedEmployeeId)) {
+            if (!_employeeRepository.EmployeeExists(taskDto.EmployeeId)) {
                 ModelState.AddModelError("TeamId", "No team with such id");
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
             
-            if (!_projectRepository.ProjectExists(taskDto.AssignedProjectId)) {
+            if (!_projectRepository.ProjectExists(taskDto.ProjectId)) {
                 ModelState.AddModelError("Client", "No client with such id");
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
@@ -80,12 +80,12 @@ namespace ProjectAPI.Controllers {
             if (!_taskRepository.TaskExists(id))
                 return NotFound();
             
-            if (!_employeeRepository.EmployeeExists(taskDto.AssignedEmployeeId)) {
+            if (!_employeeRepository.EmployeeExists(taskDto.EmployeeId)) {
                 ModelState.AddModelError("TeamId", "No team with such id");
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
             
-            if (!_projectRepository.ProjectExists(taskDto.AssignedProjectId)) {
+            if (!_projectRepository.ProjectExists(taskDto.ProjectId)) {
                 ModelState.AddModelError("Client", "No client with such id");
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }

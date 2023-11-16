@@ -22,8 +22,8 @@ public class TaskDto {
     public string Status { get; set; } = null!;
     
     [Required(ErrorMessage = "Assigned Employee Id is required")]
-    public int AssignedEmployeeId { get; set; }
+    public int EmployeeId { get; set; }
     
     [Required(ErrorMessage = "Assigned Project Id is required")]
-    public int AssignedProjectId { get; set; }
+    public int ProjectId { get; set; }
 }
