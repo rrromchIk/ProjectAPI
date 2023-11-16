@@ -7,6 +7,7 @@ namespace ProjectAPI.Helper {
         public MappingProfiles() {
             CreateMap<ProjectDto, Project>();
             CreateMap<Project, ProjectDto>();
+            CreateMap<Project, ProjectResponse>();
 
             CreateMap<Team, TeamDto>();
             CreateMap<TeamDto, Team>();

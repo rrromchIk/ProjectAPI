@@ -25,24 +25,24 @@ namespace ProjectAPI.Controllers {
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Project>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectResponse>))]
         public IActionResult GetAllProjects() {
             var projects = _projectRepository.GetAllProjects();
-            //var responseList = _mapper.Map<List<ProjectDto>>(projects);
-            return Ok(projects);
+            var responseList = _mapper.Map<List<ProjectResponse>>(projects);
+            return Ok(responseList);
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Project))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProjectResponse))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetProjectById([FromRoute] int id) {
             if (!_projectRepository.ProjectExists(id))
                 return NotFound();
 
             var project = _projectRepository.GetProjectById(id);
-            //var response = _mapper.Map<ProjectDto>(project);
+            var response = _mapper.Map<ProjectResponse>(project);
 
-            return Ok(project);
+            return Ok(response);
         }
 
         [HttpPost]
