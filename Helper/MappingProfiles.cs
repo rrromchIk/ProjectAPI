@@ -16,6 +16,9 @@ namespace ProjectAPI.Helper {
 
             CreateMap<Client, ClientResponse>();
             CreateMap<Team, TeamResponse>();
+
+            CreateMap<Employee, EmployeeDto>();
+            CreateMap<EmployeeDto, Employee>();
         }
     }
 }

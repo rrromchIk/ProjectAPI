@@ -20,6 +20,7 @@ namespace ProjectAPI {
                 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
                 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
                 builder.Services.AddScoped<IClientRepository, ClientRepository>();
+                builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
                 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
                 //Add data context to the container
